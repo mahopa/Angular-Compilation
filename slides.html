@@ -20,6 +20,8 @@
 		<!-- Theme used for syntax highlighting of code -->
 		<link rel="stylesheet" href="lib/css/zenburn.css">
 
+		<script src="https://use.fontawesome.com/38769a7187.js"></script>
+
 		<!-- Printing and PDF exports -->
 		<script>
 			var link = document.createElement( 'link' );
@@ -41,314 +43,198 @@
 			<!-- Any section element inside of this container is displayed as a slide -->
 			<div class="slides">
 				<section>
-					<h1>Angular Compile Cycle</h1>
-					<h3>Angular CLI and Tooling in Angular 2</h3>
+					<h1>Understanding the Angular Compile Cycle</h1>
+					<h3>Compiling JavaScript for fun and profit</h3>
 					<p>
 						<small>Alex Miller <a href="http://twitter.com/amahopa">@amahopa</a></small>
 					</p>
 				</section>
+				
+				<section>
+					<h2>Agenda</h2>
+					<ul>
+						<li>Compilers &amp; Lies</li>
+						<li>Angular Compilation</li>
+						<li>Just-in-Time Compilation</li>
+						<li>Ahead-of-Time Compilation</li>
+						<li>Fun &amp; Profit</li>
+					</ul>
+				</section>
+
+				<!--Why Compile-->
+				<section>
+					<h2>What does a compiler do?</h2>
+					<h3 class="fragment">It compiles.</h3>
+				</section>
 
 				<section>
-					<h2>Why?</h2>
+					<h2>What is compilation?</h2>
+					<h3 class="fragment">¯\_(ツ)_/¯</h3>
+					<h3 class="fragment">lets figure it out</h3>
+					<h4 class="fragment"><i class="fa fa-magic" alt="compilation"></i> means compilation</h3>
 				</section>
+
 				<section>
-					<h2>Setting up Angular 2 is a pain</h2>
-					<img src="img/jackie-chan.jpg" />
+					<h3>Def 1: Code =>
+						<i class="fa fa-magic" alt="compilation"></i> => Running Application<sup>*</sup></h3>
+					<p class="fragment"><sup>*</sup>This is a lie</p>
+					<aside class="notes">
+						<!--Compiler turns code into a running application-->
+						<!--This is roughly the definition used by Tobias Bosch -->
+					</aside>
+				</section>
+
+				<section>
+					<h2>C++</h2>
+					<h3>C++ => <i class="fa fa-magic" alt="compilation"></i> => 
+					Native Code => Asked to Run => Running Application</h3>
+					<h4 class="fragment">Ahead of time compilation</h3>
+					<aside classs="notes">
+						<!--Compiler turns code into code that can be run as an application-->
+						<!--Pre-compilation-->
+					</aside>
+				</section>
+
+				<section data-transition="none-out">
+					<h3>Def 1: Code => <i class="fa fa-magic" alt="compilation"></i> => Running Application</h3>
+					<h3 style="visibility: hidden">Def 2: Code => <i class="fa fa-magic" alt="compilation"></i> => Runnable Code<sup style="visibility: hidden">*</sup></h3>
+					<p style="visibility: hidden"><sup>*</sup>text</p>
+					<!--<p class="fragment"><sup>*</sup>This is still a lie</p>-->
+					<!--Compiler turns code into a running application-->
+				</section>
+
+				<section data-transition="none">
+					<h3 style="text-decoration: line-through">Def 1: Code => <i class="fa fa-magic" alt="compilation"></i> => Running Application</h3>
+					<h3>Def 2: Code => 
+						<i class="fa fa-magic" alt="compilation"></i> 
+						=> Runnable Code<sup style="visibility: hidden">*</sup></h3>
+					<p style="visibility: hidden"><sup>*</sup>text</p>
+					<!--<p class="fragment"><sup>*</sup>This is still a lie</p>-->
+					<!--Compiler turns code into a running application-->
+				</section>
+
+				<section data-transition="none-in">
+					<h3 style="text-decoration: line-through">Def 1: Code => <i class="fa fa-magic" alt="compilation"></i> => Running Application</h3>
+					<h3>Def 2: Code => <i class="fa fa-magic" alt="compilation"></i> => Runnable Code<sup>*</sup></h3>
+					<p><sup>*</sup>This is still a lie</p>
+					<!--Compiler turns code into a running application-->
+				</section>
+
+				<section>
+					<h2>C#/Java</h2>
+					<h3>C#/Java => <i class="fa fa-magic" alt="compilation"></i> => 
+					Byte Code => Asked to Run => <i class="fa fa-magic" alt="compilation"></i> => Native Code => Running Application</h3>
+					<h4 class="fragment">Ahead of time compilation &amp; Just in Time Compilation</h3>
+					<aside classs="notes">
+						<!--Compiler turns code into code that can be run as an application-->
+						<!--Pre-compilation-->
+					</aside>
+				</section>
+
+				<section data-transition="none">
+					<h3 style="text-decoration: line-through">Def 1: Code => <i class="fa fa-magic" alt="compilation"></i> => Running Application</h3>
+					<h3>Def 2: Code => <i class="fa fa-magic" alt="compilation"></i> => Runnable Code</h3>
+					<h3 style="visibility: hidden">Def 3: </h3>
+					<p style="visibility: hidden"><sup>*</sup>This is still a lie</p>
+					<!--Compiler turns code into a running application-->
+				</section>
+
+				<section data-transition="none">
+					<h3 style="text-decoration: line-through">Def 1: Code => <i class="fa fa-magic" alt="compilation"></i> => Running Application</h3>
+					<h3 style="text-decoration: line-through">Def 2: Code => <i class="fa fa-magic" alt="compilation"></i> => Runnable Code</h3>
+					<h3>Def 3: Code => <i class="fa fa-magic" alt="compilation"></i> => Code Closer to Execution 
+						<sup>*</sup>
+					</h3>
+					<p style="visibility: hidden"><sup>*</sup>Spacing</p>
+				</section>
+
+				<section data-transition="none">
+					<h3 style="text-decoration: line-through">Def 1: Code => <i class="fa fa-magic" alt="compilation"></i> => Running Application</h3>
+					<h3 style="text-decoration: line-through">Def 2: Code => <i class="fa fa-magic" alt="compilation"></i> => Runnable Code</h3>
+					<h3>Def 3: Code => <i class="fa fa-magic" alt="compilation"></i> => Code Closer to Execution <sup>*</sup></h3>
+					<p><sup>*</sup>Just kidding</p>
+				</section>
+
+				<section>
+					<h2>TypeScript</h2>
+					<h3>TypeScript => <i class="fa fa-magic" alt="compilation"></i> => 
+					Javascript => ... => Running Application</h3>
 				</section>
 				
 				<section>
-					<h2>Demo Time!</h2>
+					<h3>I know what you're thinking...</h3>
+					<h3 class="fragment">I miss regular JavaScript</h3>
+					<h3 class="fragment">Write it, interpreter runs it<sup>*</sup></h3>
+					<h3 class="fragment">No compiler needed<sup>*</sup></h3>
+					<p class="fragment"><sup>*</sup>These are lies</p>
+				</section>
+				
+				<section>
+					<h2>Code <span>=></span> Running Application</h2>
+					<h3>compiler(s)</h3>
 				</section>
 
 				<section>
-					<h2>Setting up Angular 2 is <span style="text-decoration:line-through;">a pain</span></h2>
-					<img src="img/awesome.jpg" />
+					<h2>To make Angular faster</h2>
 				</section>
-
+				
 				<section>
-					<div class="fragment">
-						<h2>We'll cover</h2>
-						<p>
-						Angular CLI and high level overview of the tools it installs
-						</p>
-					</div>
-					<div class="fragment">
-						<h2>We won't</h2>
-						<p>
-							do a deep dive on any of the tools it installs
-						</p>
-					</div>
+					<h2>How did Javascript get fast?</h2>
 				</section>
-
+				
+				<!--JIT Compilation-->
 				<section>
-					<h2>Types of Tools the CLI gives</h2>
+					<h2>Just In Time Compilation</h2>
+				</section>
+				
+				<section>
+					<h3>Advantages</h3>
 					<ul>
-						<li>Scaffolding: the CLI</li>
-						<li>Module Loading: Web Pack</li>
-						<li>Linting: TSLint</li>
-						<li>Unit Testing: Jasmine &amp; Karma</li>
-						<li>Integration Testing: Protractor</li>
+						<li>Out of the box</li>
+						<li>Faster for single compile cycle<li>
 					</ul>
 				</section>
 
+				<!--AOT Compilation-->
 				<section>
-					<h2>Angular CLI</h2>
-					<h3 class="fragment">Fork of the Ember CLI modified for Angular 2</h3>
+					<h2>Ahead of Time Compilation</h2>
 				</section>
-
-				<section>
-					<h3>Install the CLI</h3>
-					<pre><code class="hljs" data-trim contenteditable>
-npm install -g typescript@2.0
-npm install -g angular-cli
-						
-					</code></pre>
-						<h3>Creating a project</h3>
-					<pre><code class="hljs" data-trim contenteditable>
-
-				ng new some-project
-					
-					</code></pre>
-						<h3>Running a project</h3>
-					<pre><code class="hljs" data-trim contenteditable>
-cd some-project/
-ng serve
-					
-					</code></pre>
-				</section>
-
-				<section>
-					<h3>Creating a project...like a boss</h3>
-					<pre><code class="hljs" data-trim contenteditable>
-ng new some-project --skip-npm
-cd some-project
-yarn
-					</code></pre>
-				</section>
-
-				<section>
-					<h3>Yarn?</h3>
-					<h4>Package installer like npm but better</h4>
-					<h4>Open Source, created at Facebook</h4>
-					<a href="https://yarnpkg.com/">yarnpkg.com</a>
-				<pre><code class="hljs" data-trim contenteditable>
-
-				npm install -g yarn
-					
-				</code></pre>
-				</section>
-
-				<section>
-					<img src="img/yarn.png"/>
-				</section>
-
-				<section>
-					<h3>NPM vs Yarn commands</h3>
-				<pre><code class="hljs" data-trim contenteditable>
-
-npm install pkg-name --save
-yarn add pkg-name
-
-npm install -g pkg-name
-yard global add pkg-name
-
-npm install
-yarn
-					
-				</code></pre>
-				</section>
-
-				<section>
-					<h2>Scaffolding</h2>
-					<table><thead>
-<tr>
-<th>Scaffold</th>
-<th>Usage</th>
-</tr>
-</thead><tbody>
-<tr>
-<td>Component</td>
-<td><code>ng g component my-new-component</code></td>
-</tr>
-<tr>
-<td>Directive</td>
-<td><code>ng g directive my-new-directive</code></td>
-</tr>
-<tr>
-<td>Pipe</td>
-<td><code>ng g pipe my-new-pipe</code></td>
-</tr>
-<tr>
-<td>Service</td>
-<td><code>ng g service my-new-service</code></td>
-</tr>
-<tr>
-<td>Class</td>
-<td><code>ng g class my-new-class</code></td>
-</tr>
-<tr>
-<td>Interface</td>
-<td><code>ng g interface my-new-interface</code></td>
-</tr>
-<tr>
-<td>Enum</td>
-<td><code>ng g enum my-new-enum</code></td>
-</tr>
-<tr>
-<td>Module</td>
-<td><code>ng g module my-module</code></td>
-</tr>
-</tbody></table>
-				</section>
-
-				<section>
-					<h3>Where does CLI config live?</h3>
-					<h4>angular-cli.json</h4>
-				</section>
-
-				<section>
-					<h2>Module Loading</h2>
-				</section>
-
-				<section>
-					<h3>Allows the browser to load ts modules and other resources in the correct order</h3>
-				</section>
-
-				<section>
-					<h4>SystemJS is simpler, but less powerful</h4>
-					<h4>Webpack is powerful, but can be complex to configure</h4>
-					<h4 class="fragment">Browserify exists.</h4>
-				</section>
-
-				<section>
-					<h3>Also uses angular-cli.json</h3>
-					<h4>Webpack config is generated from the angular-cli.json</h4>
-				</section>
-
-				<section>
-				<h3>Building</h3>
-				<pre><code class="hljs" data-trim contenteditable>
-ng build
-ng build --prod
-				</code></pre>
-				</section>
-
-				<section>
-					<h3>Other Module System Features</h3>
+						<section>
+					<h3>Advantages</h3>
 					<ul>
-						<li>Live Reloading</li>
-						<li>Bundling &amp; Minification</li>
-						<li>CSS Preprocessing</li>
+						<li>Smaller network transfer<li>
+						<li>Faster render times</li>
+						<li>Throw template errors early</li>
 					</ul>
 				</section>
 
-					<section>
-				<h3>Serving the Code</h3>
-				<pre><code class="hljs" data-trim contenteditable>
-ng serve
-				</code></pre>
+				<!--How to leverage each-->
+				<section>
+					<h1>Fun &amp; Profit<h1>
+				</section>
+				<section>
+					<h2>Option 1: JIT</h2>
+				</section>
+				
+				<section>
+					<h2>Option 2: AOT the hard way</h2>
 				</section>
 
 				<section>
-					<h3>CLI moved from SystemJS => Webpack</h3>
-					<h3></h3>
+					<h2>Option 3: AOT the easy way</h2>
 				</section>
-
-				<section>
-				<h3>Tree Shaking!</h3>
-				<img src="img/tree-shake.gif"/>
-				<h4 class="fragment">Removes unused code from the build</h4>
-				</section>
-
-				<section>
-					<h2>Linting &amp; Code Style Consistency</h2>
-				</section>
-
-				<section>
-				<h3>Running Linter</h3>
-				<pre><code class="hljs" data-trim contenteditable>
-ng lint
-				</code></pre>
-				</section>
-
-			<section>
-				<h3>Configuration?</h3>
-				<h4>tslint.json</h4>
-				</section>
-
-				<section>
-				<h3>My editor won't auto format for my tslint options...</h3>
-				</section>
-
-				<section>
-				<h3>Editor Config!</h3>
-				<h4>Helps maintain auto formatting across editors</h4>
-				<h4>.editorconfig</h4>
-				</section>
-
-				<section>
-					<h2>Unit Testing</h2>
-				</section>
-
-				<section>
-				<h3>Jasmine</h3>
-				<h4>Testing &amp; Assertion Library</h4>
-				</section>
-
-				<section>
-				<h3>Karma</h3>
-				<h4>Test Runner</h4>
-				<h5>Can be used with other testing libraries like Mocha</h5>
-				</section>
-
-				<section>
-				<h3>Running Unit Tests</h3>
-				<pre><code class="hljs" data-trim contenteditable>
-ng test
-				</code></pre>
-				</section>
-
-				<section>
-				<h3>Configuration?</h3>
-				<h4>karma.conf.js</h4>
-				</section>
-
-				<section>
-					<h2>Integration Testing</h2>
-				</section>
-
-				<section>
-					<h3>Protractor</h3>
-					<h4>End-to-end testing built on Selenium</h4>
-				</section>
-
-				<section>
-				<h3>Running Integration Tests</h3>
-				server must be running
-				<pre><code class="hljs" data-trim contenteditable>
-ng e2e
-				</code></pre>
-				</section>
-
-				<section>
-				<h3>Configuration?</h3>
-				<h4>protractor.conf.js</h4>
-				</section>
-
 				<section>
 					<h2>References</h2>
 					<ul>
 					<li><a href="https://www.youtube.com/watch?v=kW9cJsvcsGo">Tobias Bosch explains the Angular Compiler</a></li>
 					<li><a href="https://angular.io/docs/ts/latest/cookbook/aot-compiler.html">AOT Compilation Cookbook</a></li>
 					<li><a href="https://github.com/mgechev/angular-seed">Angular Seed (Minko's Version)</a></li>
-					<li><a href="http://blog.mgechev.com/2016/08/14/ahead-of-time-compilation-angular-offline-precompilation/">Minko on Ahead-of-Time Compilation in Angular</a>
+					<li><a href="http://blog.mgechev.com/2016/08/14/ahead-of-time-compilation-angular-offline-precompilation/">Minko on Ahead-of-Time Compilation in Angular</a></li>
+					<li><a href="https://github.com/angular/angular-cli">Angular CLI</a></li>
 					</ul>
 				</section>
-
-				
-
 				<section>
-					<h3>Want go in farther in depth with one of these tools?</h3>
+					<h3>Want to explore a topic?</h3>
 					<h2 class="fragment">
 						Give a talk!
 					</h2>
