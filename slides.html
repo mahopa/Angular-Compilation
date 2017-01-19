@@ -231,6 +231,12 @@ class C {
 				</section>
 
 				<section>
+					<h3>What gets compiled?</h3>
+					<h3 class="fragment">TypeScript => TS/JS</h3>
+					<h3 class="fragment">Templates (HTML) => TS/JS</h3>
+				</section>
+
+				<section>
 					<h2>JIT Compilation</h2>
 					<ol>
 						<li class="fragment">TypeScript => JavaScript</li>
@@ -252,7 +258,7 @@ class C {
 					<ul>
 						<li>Must Transfer Compiler to Client</li>
 						<li>Compilation delay before render</li>
-						<li>Won't run in all environments<li>
+						<li>Won't run in all environments</li>
 					</ul>
 				</section>
 
@@ -278,34 +284,35 @@ class C {
 				</section>
 
 				<section>
-					<pre><code class="hljs" data-trim contenteditable>
-/** 
- * Documentation for C 
- */
-class C { 
-    /** 
-     * constructor documentation
-     * @param a my parameter documentation
-     * @param b another parameter documentation
-     */
-    constructor(a: string, b: C) { }
-}
-					</code></pre>
-				</section>
-
-				<section>
-					<h3>AOT Advantages</h3>
+					<h3>AOT</h3>
 					<ul>
-						<li>Smaller network transfer<li>
-						<li>Faster render times</li>
-						<li>Throws template errors early</li>
-					</ul>
-					<h3>Disadvantages</h3>
+						<li>
+							<h3>Advantages</h3>
+							<ul>
+								<li>Faster render times</li>
+								<li>Throws template errors early</li>
+								<li>Type checking in templates</li>
+							</ul>
+						</li>
+						<li>
+												<h3>Disadvantages</h3>
 					<ul>
 						<li>3rd party modules must include TypeScript or metadata</li>
 						<li>Code does not execute before generation</li>
+						<li>Generated templates larger than html. (Use lazy loading)</li>
 					</ul>
+						</li>
+					</ul>
+
 				</section>
+
+			<section>
+				<h3>Demo Benchmarks</h3>
+			</section>
+
+			<section>
+					<h3>Demo Compiled Template</h3>
+			</section>
 
 				<!--How to leverage each-->
 				<section>
@@ -313,15 +320,55 @@ class C {
 				</section>
 
 				<section>
+					<h2>Why do we even need to compile?</h2>
+					<h3 class="fragment">There's another compiler Angular is optimizing for...</h3>
+				</section>
+
+				<section>
+					<h2>JavaScript => Browser => V8 <i class="fa fa-magic" alt="compilation"></i>  => Native Code => Application</h2>
+					<h3>Angular Optimizes for what the V8 engine's JIT compiler does best</h3>
+				</section>
+
+				<section>
+					<h3 class="fragment">Write TypeScript that is nice for humans</h3>
+					<h3 class="fragment">Compile to JavaScript that is nice for browsers</h3>
+					<h3 class="fragment">Compile to Native Code that is nice for processors</h3>
+					<h3 class="fragment">Profit.</h3>
+				</section>
+
+				<section>
 					<h2>Using AOT</h2>
+				</section>
+
+				<section>
+					<h2>AOT uses the NGC (Angular Compiler)</h2>
+					<h3 class="fragment">NGC compiles TypeScript to TypeScript, ES2015, ES5</h3>
+					<h3 class="fragment">With AOT it produces TypeScript</h3>
 				</section>
 				
 				<section>
 					<h2>Option 1: Use NGC Directly</h2>
+					<ul>
+						<li>Add tsconfig-aot.json for AOT</li>
+						<li>index.html for AOT</li>
+						<li>Bootstrap using in main bootstrapModuleFactory</li>
+						<li>Add Rollup for tree shaking</li>
+					</ul>
 				</section>
 
 				<section>
 					<h2>Option 2: Leverage a Library</h2>
+					Angular Seed -> serve.prod.exp
+					Angular CLI -> ng serve -prod --aot
+				</section>
+
+				<section>
+					<h3>Review</h3>
+					<ul>
+						<li class="fragment">Compilation in General</li>
+						<li class="fragment">Compilation Cycle in Angular</li>
+						<li class="fragment">How to use AOT</li>
+					</ul>
 				</section>
 
 				<section>
@@ -329,6 +376,7 @@ class C {
 					<ul>
 					<li><a href="https://www.youtube.com/watch?v=kW9cJsvcsGo">Tobias Bosch explains the Angular Compiler</a></li>
 					<li><a href="https://angular.io/docs/ts/latest/cookbook/aot-compiler.html">AOT Compilation Cookbook</a></li>
+					<li><a href="https://github.com/mgechev/angular2-ngc-rollup-build">Simple AOT example</a></li>
 					<li><a href="https://github.com/mgechev/angular-seed">Angular Seed (Minko's Version)</a></li>
 					<li><a href="http://blog.mgechev.com/2016/08/14/ahead-of-time-compilation-angular-offline-precompilation/">Minko on Ahead-of-Time Compilation in Angular</a></li>
 					<li><a href="https://github.com/angular/angular-cli">Angular CLI</a></li>
