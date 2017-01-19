@@ -55,8 +55,6 @@
 					<ul>
 						<li>Compilers &amp; Lies</li>
 						<li>Angular Compilation</li>
-						<li>Just-in-Time Compilation</li>
-						<li>Ahead-of-Time Compilation</li>
 						<li>Fun &amp; Profit</li>
 					</ul>
 				</section>
@@ -71,7 +69,7 @@
 					<h2>What is compilation?</h2>
 					<h3 class="fragment">¯\_(ツ)_/¯</h3>
 					<h3 class="fragment">lets figure it out</h3>
-					<h4 class="fragment"><i class="fa fa-magic" alt="compilation"></i> means compilation</h3>
+					<h4 class="fragment">( <i class="fa fa-magic" alt="compilation"></i> means compilation )</h3>
 				</section>
 
 				<section>
@@ -156,63 +154,156 @@
 				</section>
 
 				<section>
-					<h2>TypeScript</h2>
-					<h3>TypeScript => <i class="fa fa-magic" alt="compilation"></i> => 
-					Javascript => ... => Running Application</h3>
-				</section>
-				
-				<section data-transition="none">
-					<h3>I know what you're thinking...</h3>
-					<h3 class="fragment">I miss regular JavaScript</h3>
-					<h3 class="fragment">Write it, interpreter runs it<sup style="visibility: hidden">*</sup></h3>
-					<h3 class="fragment">No compiler involved<sup style="visibility: hidden">*</sup></h3>
-					<p style="visibility: hidden"><sup>*</sup>These are lies</p>
-				</section>
-
-				<section data-transition="none">
-					<h3>I know what you're thinking...</h3>
-					<h3>I miss regular JavaScript</h3>
-					<h3>Write it, interpreter runs it<sup>*</sup></h3>
-					<h3>No compiler involved<sup>*</sup></h3>
-					<p><sup>*</sup>These are lies</p>
-				</section>
-				
-				<section>
-					<h2>Code <span>=></span> Running Application</h2>
-					<h3>compiler(s)</h3>
+					<h3>How do you generate code from code?</h3>
 				</section>
 
 				<section>
-					<h2>To make Angular faster</h2>
+					<img src="img/Ancient-Aliens.jpg" />
+					<h3 class="fragment">Abstract Syntax Trees</h3>
 				</section>
-				
+
 				<section>
-					<h2>How did Javascript get fast?</h2>
+					<h3>Parse Code => Create AST => Generate Code</h3>
+					<a href="https://astexplorer.net/">astexplorer.net</a>
 				</section>
-				
-				<!--JIT Compilation-->
+
 				<section>
-					<h2>Just In Time Compilation</h2>
+					<h3>TypeScript Input</h3>
+							<pre><code class="hljs" data-trim contenteditable>
+/** 
+ * Documentation for C 
+ */
+class C { 
+    /** 
+     * constructor documentation
+     * @param a my parameter documentation
+     * @param b another parameter documentation
+     */
+    constructor(a: string, b: C) { }
+}
+					</code></pre>
+
+					<p>
+						Source: <a href="https://github.com/Microsoft/TypeScript/wiki/Using-the-Compiler-API">
+						TypeScript Compiler API Wiki
+						</a>
+					</p>
 				</section>
-				
+
 				<section>
-					<h3>Advantages</h3>
+										<h3>AST output</h3>
+						<pre><code class="hljs" data-trim contenteditable>
+[
+    {
+        "name": "C",
+        "documentation": "Documentation for C ",
+        "type": "typeof C",
+        "constructors": [
+            {
+                "parameters": [
+                    {
+                        "name": "a",
+                        "documentation": "my parameter documentation",
+                        "type": "string"
+                    },
+                    {
+                        "name": "b",
+                        "documentation": "another parameter documentation",
+                        "type": "C"
+                    }
+                ],
+                "returnType": "C",
+                "documentation": "constructor documentation"
+            }
+        ]
+    }
+]
+					</code></pre>
+										<p>
+						Source: <a href="https://github.com/Microsoft/TypeScript/wiki/Using-the-Compiler-API">
+						TypeScript Compiler API Wiki
+						</a>
+					</p>
+				</section>
+
+				<section>
+					<h2>Angular Compilation</h2>
+				</section>
+
+				<section>
+					<h2>JIT Compilation</h2>
+					<ol>
+						<li class="fragment">TypeScript => JavaScript</li>
+						<li class="fragment">Transfer Application JS, Templates, Angular &amp; Compiler to Client</li>
+						<li class="fragment">Bootstrap Application</li>
+						<li class="fragment">Parse Classes &amp; Templates</li>
+						<li class="fragment">Generate Code</li>
+						<li class="fragment">Render Application</li>
+					</ol>
+				</section>
+
+				<section>
+					<h3>JIT Advantages</h3>
 					<ul>
 						<li>Out of the box</li>
-						<li>Faster for single compile cycle<li>
+						<li>Faster for single compile cycle</li>
+					</ul>
+					<h3>Disadvantages</h3>
+					<ul>
+						<li>Must Transfer Compiler to Client</li>
+						<li>Compilation delay before render</li>
+						<li>Won't run in all environments<li>
 					</ul>
 				</section>
 
-				<!--AOT Compilation-->
 				<section>
+					<h2>Generating code in the browser</h2>
+					<h3 class="fragment">String Concatination + Eval</h3>
+				</section>
+
+				<section>	
 					<h2>Ahead of Time Compilation</h2>
 				</section>
-						<section>
-					<h3>Advantages</h3>
+
+				<section>
+					<h2>AOT Compilation</h2>
+					<ol>
+						<li class="fragment">Parse Classes &amp; Templates</li>
+						<li class="fragment">Generate Code (TypeScript)</li>
+						<li class="fragment">TypeScript => JavaScript</li>
+						<li class="fragment">Transfer Application JS &amp; Angular to Client</li>
+						<li class="fragment">Bootstrap Application</li>
+						<li class="fragment">Render Application</li>
+					</ol>
+				</section>
+
+				<section>
+					<pre><code class="hljs" data-trim contenteditable>
+/** 
+ * Documentation for C 
+ */
+class C { 
+    /** 
+     * constructor documentation
+     * @param a my parameter documentation
+     * @param b another parameter documentation
+     */
+    constructor(a: string, b: C) { }
+}
+					</code></pre>
+				</section>
+
+				<section>
+					<h3>AOT Advantages</h3>
 					<ul>
 						<li>Smaller network transfer<li>
 						<li>Faster render times</li>
-						<li>Throw template errors early</li>
+						<li>Throws template errors early</li>
+					</ul>
+					<h3>Disadvantages</h3>
+					<ul>
+						<li>3rd party modules must include TypeScript or metadata</li>
+						<li>Code does not execute before generation</li>
 					</ul>
 				</section>
 
@@ -220,17 +311,19 @@
 				<section>
 					<h1>Fun &amp; Profit<h1>
 				</section>
+
 				<section>
-					<h2>Option 1: JIT</h2>
+					<h2>Using AOT</h2>
 				</section>
 				
 				<section>
-					<h2>Option 2: AOT the hard way</h2>
+					<h2>Option 1: Use NGC Directly</h2>
 				</section>
 
 				<section>
-					<h2>Option 3: AOT the easy way</h2>
+					<h2>Option 2: Leverage a Library</h2>
 				</section>
+
 				<section>
 					<h2>References</h2>
 					<ul>
@@ -249,7 +342,7 @@
 				</section>
 
 				<section>
-					<h2>El Fin</h2>
+					<h2>The End</h2>
 				</section>
 
 			</div>
